@@ -1,0 +1,971 @@
+
+<html>
+<head>
+<title>H5GG</title>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style>
+html {
+    zoom:1.2; /*在手机上显示整体放大1.2倍*/
+}
+
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+						height: 100%;
+    background-image: url('https://i.pinimg.com/736x/f9/4e/f0/f94ef0905fd3105b0cf8c513f9ec0334.jpg'); /* استبدل هذا بالمسار الصحيح */
+    background-size: cover; /* لجعل الصورة تغطي كامل الشاشة */
+    background-repeat: no-repeat; /* لمنع تكرار الصورة */
+}
+
+    /*默认文字颜色*/
+    color: #000;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    
+   -webkit-tap-highlight-color: transparent;
+   outline: none;
+    
+    /*默认布局边框:灰色虚线, 开启这个方便查看布局*/
+    /*/
+     border: 1px dashed gray;/**/
+    
+}
+
+*:not(input,checkbox,textarea) {
+    /*禁止文本选择*/
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   user-select: none; /* Non-prefixed version, currently */
+}
+
+input {
+    background-color: rgba(0,0,0,0);
+    height: 25px;
+}
+
+button {
+    height: 30px;
+    color: #3393EF;
+    background-color: #84848450;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding: 0 8px;
+    margin: 1px;
+}
+
+button:active {
+    background-color: #fff;
+    transform: translateY(2px);
+}
+
+input[type=radio]  {
+    width:16px;
+    height:16px;
+    margin-right:6px;
+    border:none;
+    outline-style:none;
+    -webkit-appearance:none;
+    vertical-align:middle;
+    border:1px solid #686868F0;
+    border-radius:50%;
+    margin:6px;
+}
+input[type=radio]:checked {
+    border:5px solid #2F7DCDF0;
+    background:#E8E8E8;
+}
+    
+input[type=checkbox]{
+ visibility: hidden;
+ vertical-align:middle; margin-bottom:2px;
+ cursor: pointer;
+ position: relative;
+ width: 24px;
+ height: 24px;
+}
+input[type=checkbox]::after{
+ position: absolute;
+ top: 0;
+ margin-top:2px;
+ width: 14px; height: 14px;
+ border: 1px solid #686868;
+ border-radius: 3px;
+ background-color: rgba(0,0,0,0);
+ display: inline-block;
+ visibility: visible;
+ text-align: center;
+ content: ' ';
+}
+input[type=checkbox]:checked::after{
+ content: "✓";
+ color: #FFF;
+ border-color: #B8B8B8;
+ background-color: #4498F7;
+ font-size: 12px;
+ font-weight: bold;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+}
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 15px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: #68686830;
+  border-radius: 1.3px;
+  border: 0.2px solid #010101;
+}
+input[type=range]::-webkit-slider-thumb {
+  border: 1px solid #000000;
+  height: 18px;
+  width: 16px;
+  border-radius: 3px;
+  background: #EEEEEEE0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -2px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #367ebd;
+}
+
+.menubox {
+    display: inline;
+    padding: 5px;
+    width: 300px;
+    height: 20px;
+    line-height: 20px; /*height和line-height设置一样即可文字垂直居中*/
+    text-align:center;
+    background-color: #E8E8E890;
+    border-radius: 5px;
+}
+.menubox.current {
+    color: #E8E8E8;
+    background-color: #848484;
+}
+
+.menuview {
+    display:none;
+}
+
+.menuview.current {
+    display:block;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+    
+/* 滚动条整体部分 */
+.scrollbar {
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.scrollbar::-webkit-scrollbar {
+    width: 5px; /* 纵向滚动条宽度 */
+    height: 5px;/* 横向滚动条高度 */
+    background-color: #F5F5F5; /* 滚动条整体背景，一般被覆盖着 */
+}
+/* 滚动条的轨道（里面装有Thumb） */
+.scrollbar::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); /* 滚动条轨道阴影 */
+    /*border-radius: 10px; /* 滚动条轨道圆角 */
+    background-color: #F5F5F5; /* 滚动条轨道背景 */
+}
+/* 滚动条里面的滑块 */
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 15px; /* 滚动条滑块圆角 */
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3); /* 滚动条滑块阴影 */
+    background-color: #B8B8B8; /* 滚动条滑块颜色 */
+}
+
+.popup_container {
+    position:absolute;
+    z-index: 1000;
+    left:50%;
+    top:0;
+}
+    
+#popup_search_edit {
+    display:none;
+    text-align: center;
+    background-color: #FDFDFD;
+    width:200px;
+    height:150px;
+    position:absolute;
+    left:-100px; top:50px;
+    border:1px solid #B8B8B880;
+    border-radius: 5px;
+    padding: 10px;
+}
+    
+#popup_progress {
+    display:none;
+    text-align: center;
+    background-color: #FDFDFD;
+    width:200px;
+    height:20px;
+    position:absolute;
+    left:-100px; top:100px;
+    border:1px solid #B8B8B880;
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 2000;
+}
+    
+#popup_loadscripts {
+    display:none;
+    text-align: center;
+    background-color: #FDFDFD;
+    width:250px;
+    height:220px;
+    position:absolute;
+    left:-125px; top:20px;
+    border:1px solid #B8B8B880;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#popup_proclist {
+    display:none;
+    text-align: center;
+    background-color: #FDFDFD;
+    width:180px;
+    max-height:200px;
+    position:absolute;
+    left:-90px; top:50px;
+    border:1px solid #B8B8B880;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#popup_proclist button {
+    display: block;
+    width: 100%;
+    height: 26px;
+    border-radius: 2px;
+    font-weight:bold;
+    color: black;
+    text-align: left;
+    background-color: #00000005;
+}
+
+table.datatype {
+    border: 1px solid red;
+    border-radius: 2px;
+    border-collapse: collapse;
+    border-style:hidden;
+    box-shadow: 0 0 0 1px #3393EF;
+}
+
+.datatype td {
+    cursor: hand;
+    padding: 5px;
+    color: #3393EF;
+    border: 1px solid #3393EF;
+    width: 22px;
+    height: 15px;
+    text-align: center;
+}
+
+.datatype td.selected {
+    color: white;
+    background-color: #3393EF;
+}
+
+.maskview {
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    filter: alpha(opacity=60);
+    background-color: #777;
+    z-index: 1;
+    opacity:0.5;
+}
+
+#listdiv {
+    display:block;
+    overflow-x:hidden;
+    overflow-y:scroll;
+    height:100%;
+}
+
+#resultList tr.hilight td{
+    color: #3393EF;
+}
+
+#resultList td {
+    border-bottom:solid 1px #D1D1D1;
+}
+#resultList td font {
+    font-size:12px;color:#848484
+}
+
+     .button-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            font-size: 14px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        .social-icons img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .social-icons a:active {
+            transform: scale(1);
+        }
+
+        .music-player {
+            margin-top: 20px;
+        }
+
+        .music-player button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .music-player button:hover {
+            background-color: #218838;
+					}
+</style>
+
+<script>
+var h5gg_jquery_stub;
+if(typeof $ == 'undefined')
+    document.write("<script src=\"https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js\"><\/script>");
+</script>
+
+<script>
+    
+if(typeof $ == 'undefined')
+    //while(1)
+        alert("网络连接失败, 请重新启动!");
+    
+//根据选择的有符号/无符号数确定搜索类型
+function h5ggType(type)
+{
+    if($("input:radio[name=numtype]:checked").val()=="unsigned") {
+        switch(type) {
+            case "I8":
+                return "U8";
+            case "I16":
+                return "U16";
+            case "I32":
+                return "U32";
+            case "I64":
+                return "U64";
+        }
+    }
+    
+    return type;
+}
+    
+//页面显示完毕事件
+$(document).ready(function(){
+    /*禁止文本选择和拖动*/
+    document.body.onselectstart = document.body.ondrag =function(){
+        return false;
+    }
+    //文本框等输入完毕后页面自动滚动到顶部
+    $("input").blur(function(){
+        window.scroll(0,0);
+    });
+    
+    //激活webkit的button:active
+    document.body.addEventListener('touchstart', function () {});
+    
+    //绑定菜单点击切换子页面
+    $("div.menubox").unbind('click').click(function(){
+        $("div.menubox").removeClass("current");
+        $("div.menuview").removeClass("current");
+        $(this).addClass("current");
+        
+        var menuid = $(this).attr("menu");
+        $("div#"+menuid).addClass("current");
+    });
+    
+    $("#datavalue").focus(function(){
+        var input = $(this);
+        input.attr("type","number");
+        setTimeout(function(){
+            input.attr("type","text");
+        }, 500);
+    });
+    
+    
+    $("#crossproc").click(function() {
+        $("#popup_proclist").show();
+        $("#maskview").show();
+    });
+        
+    if(typeof h5gg!='undefined') {
+        //清除设计演示的结果列表
+        onClickClearResults();
+    
+        //设置标题栏区域可拖动悬浮窗
+        setWindowDrag(0, 0, 400, 80);
+        
+        //布局调整函数
+        var layout = function() {
+            
+            //window.orientation是设备握持方向, 不是屏幕显示方向
+            if(window.lastorientation==window.orientation) return;
+            window.lastorientation=window.orientation;
+            
+            //window.screen中的宽高不会随着屏幕旋转更新(只会在初始化的时候固定)
+            if(Math.abs(window.orientation)==90) {
+                var x = (window.screen.height-370)/2;
+                var y = (window.screen.width-370)/2;
+                setWindowRect(x,y,370,370);
+            } else {
+                //竖屏模式加大显示高度
+                var x = (window.screen.width-370)/2;
+                var y = (window.screen.height-600)/2;
+                setWindowRect(x,y,370,600);
+            }
+        }
+        
+        if(navigator.userAgent.toString().indexOf("iPad")>0) {
+            //如果是ipad直接显示在左边, 防止分屏切换导致看不到悬浮窗口
+            setWindowRect(0,100,370,600);
+        } else {
+            layout();
+            window.addEventListener("orientationchange", layout, false);
+        }
+        
+        if(h5gg.getProcList())  //不为空(null)说明是具有跨进程权限
+        {
+            refreshProcList();
+            $("#procname").text('');
+            $("#crossproc").show();
+            $("#popup_proclist").show();
+            $("#maskview").show();
+            $("#closeMenu").hide();
+        } else  {
+            $("#crossproc").hide();
+        }
+        
+        setInterval(function(){
+            if($("#popup_proclist").is(":visible"))
+                refreshProcList();
+
+            if($("#procname").attr('pid'))
+            {
+                var procs = h5gg.getProcList();
+                var alive = false;
+                for(var i=0; i<procs.length; i++) {
+                    if(procs[i].pid == $("#procname").attr('pid')) {
+                        alive=true;
+                        break;
+                    }
+                }
+                
+                if(!alive) {
+                    alert("目标进程已结束\n\n请点击标题栏选择新的目标");
+                    $("#procname").removeAttr('pid');
+                    $("#procname").text('');
+                }
+            }
+            
+        }, 1500);
+    }
+    
+    
+    //设置菜单体高度 = 页面总高 - 标题高度
+    $("#bodyView").height(document.body.offsetHeight - $('#titleBar')[0].offsetHeight);
+    $("#listdiv").html($("#listdiv").html()); //刷新一下内容, 否则这个高度不会自动更新
+    
+    //点击结果列表里面的地址时弹出修改窗口, 要在listdiv刷新html之后绑定
+    $("table#resultList").on('click','tr', function()
+    {
+        $("table#resultList tr").removeClass("hilight");
+        $(this).addClass("hilight");
+        
+        var address = $(this).attr("address");
+        var datatype = $(this).attr("datatype");
+        var datavalue = $(this).attr("datavalue");
+        
+        //读取该地址最新数据
+        if(typeof h5gg!='undefined')
+            datavalue = h5gg.getValue(address, h5ggType(datatype));
+        
+        showPopView("修改", function(type, value){
+            
+            if(!h5gg.setValue(address, value, h5ggType(type))) {
+                alert("修改失败,可能地址已失效!");
+            }
+            
+            onClickRefreshResults();
+            
+        }, datatype, datavalue);
+    });
+});
+
+function refreshProcList()
+{
+    $("#proctable button").remove();
+    
+    var procs = h5gg.getProcList();
+    
+    for(var i=0; i<procs.length; i++) {
+        var proc = procs[i];
+        var btn = $("<button>"+proc.name+"</button>");
+        btn.attr("pid", proc.pid);
+        btn.click(function()
+        {
+            if(!h5gg.setTargetProc($(this).attr('pid'))) {
+                alert("无法选定该目标");
+                return;
+            }
+            
+            onClickClearResults();
+            
+            $("#procname").attr('pid', $(this).attr('pid'));
+            $("#procname").text($(this).text());
+            $("#popup_proclist").hide();
+            $("#maskview").hide();
+        });
+        
+        $("#proctable").append(btn);
+    }
+}
+
+function refreshLocalSrcipts()
+{
+    $("table#localjslist tr").remove();
+    
+    var jsfiles = h5gg.getLocalScripts();
+
+    setTimeout(function(){
+        
+        if(jsfiles.length==0) {
+            $("table#localjslist tbody").append("<tr><td colspan=2>正在搜索当前App的Documents数据目录...<br/>正在搜索当前App的.app程序目录...<br/>没有找到任何(*.js)或(*.html)文件!</td></td>");
+        }
+        
+        $("table#localjslist tbody").append('<tr><td style="border-right-style:none; color:blue">从文件管理器中选择</td><td style="border-left-style:none;width:45px"><button onclick="h5gg.pickScriptFile(onClickLoadScript)">浏览</button></td></tr>');
+        
+        for(var i=0; i<jsfiles.length; i++) {
+            var row = '<tr><td style="border-right-style:none;font-weight:bold;color:green">'+jsfiles[i].name+'</td><td style="border-left-style:none;width:45px"><button onclick="onClickLoadScript(\''+jsfiles[i].path+'\')">加载</button></td></tr>';
+            $("table#localjslist tbody").append(row);
+        }
+    }, 300);
+}
+
+function onShowLoadScript(show)
+{
+    if(show) {
+        $("#maskview").show();
+        $("#popup_loadscripts").show();
+        
+        if(typeof h5gg!='undefined') refreshLocalSrcipts();
+    } else {
+        $("#maskview").hide();
+        $("#popup_loadscripts").hide();
+    }
+}
+
+function onClickLoadScript(url)
+{
+    if(!url)return;
+    
+    $("#popup_progress").show();
+    $("#maskview_script").show();
+    
+    if(/^\w+\:/.test(url)==false) url = "file://"+url;
+    
+    url = new URL(url);
+    url.searchParams.append("_", Math.random());
+    
+    if(/\.js$/.test(url.pathname)==false) {
+        window.location = url.href;
+        return;
+    }
+    
+    var script = document.createElement("script");
+
+    script.type = "text/javascript";
+    
+    script.onload = function () {
+      alert("JS脚本执行完毕");
+        $("#popup_progress").hide();
+        $("#maskview_script").hide();
+    };
+    
+    script.onerror = function () {
+        alert("加载失败! 文件不存在或网络异常");
+        $("#popup_progress").hide();
+        $("#maskview_script").hide();
+    };
+
+    script.src = url.href;
+    document.body.appendChild(script);
+}
+
+
+//弹出搜索或修改窗口
+function showPopView(name, action, type, value)
+{
+    $("#maskview").show();
+    $("#popup_search_edit").show();
+    $("#popup_search_edit").find("B#titleBar").text(name);
+    $("#popup_search_edit").find("button#action").text(name);
+    
+    if(type) {
+        $("table#datatype td").each(function(){
+            if($(this).text()==type)
+                $(this).addClass("selected");
+            else
+                $(this).removeClass("selected");
+        });
+    }
+    
+    if(value) {
+        $("input#datavalue").val(value);
+    }
+    
+    $("input#datavalue").focus();
+    
+    $("#popup_search_edit").find("button#action").unbind("click").click(function(){
+        var type = $("table#datatype td.selected").text();
+        var value = $("input#datavalue").val();
+        
+        $("#popup_search_edit").hide();
+        $("#popup_progress").show();
+        
+        setTimeout(function() {
+            
+            action(type, value);
+            
+            $("#popup_progress").hide();
+            $("#maskview").hide();
+        }, 200);
+        
+    });
+    
+    $("#popup_search_edit").find("button#cancel").unbind("click").click(function(){
+        $("#maskview").hide();
+        $("#popup_search_edit").hide();
+    });
+    
+    $("table#datatype td").unbind("click").click(function(){
+        $("table#datatype td").removeClass("selected");
+        $(this).addClass("selected");
+        $("input#datavalue").focus();
+    });
+}
+
+function onClickClearResults()
+{
+    $("input#datavalue").val("");
+    $("#results_count").hide();
+    $("table#resultList tr").remove();
+    $("table#resultList").attr("currentCount", 0);
+    if(typeof h5gg!='undefined') h5gg.clearResults();
+}
+
+function loadResults(from, count)
+{
+    var maxCount = count;
+    var skipCount = from;
+    
+    var results = h5gg.getResults(maxCount, skipCount);
+    
+    //alert("count"+count+":"+results.length+":"+results[0].address);
+    
+    for(var i=0; i<results.length; i++)
+    {
+        if(results[i].type=='F32' || results[i].type=='F64')
+            results[i].value = '('+results[i].value+')';
+        var row = '<tr address="'+results[i].address+'" datatype="'+results[i].type+'" datavalue="'+results[i].value+'"><td>'+(from+i+1)+'. '+results[i].address+'<br/><font>'+results[i].value+'</font></td></tr>';
+        
+        $("table#resultList tbody").append(row);
+    }
+}
+
+function onClickRefreshResults(clean)
+{
+   $("table#resultList tr").remove();
+   
+   if(clean) {
+       $("#listdiv").get(0).scroll(0,0);
+       $("table#resultList").attr("currentCount", 0);
+   }
+
+    var count = h5gg.getResultsCount();
+    $("#results_count").text("共找到"+count+"条结果");
+    $("#results_count").show();
+    
+    var currentCount = Number($("table#resultList").attr("currentCount"));
+    if(isNaN(currentCount) || currentCount==0) {
+        currentCount = 100;
+        $("table#resultList").attr("currentCount", 100);
+    }
+    
+    loadResults(0, currentCount);
+}
+
+function loadMoreResults() {
+    console.log("load more data!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+Math.random());
+    
+    //当前显示数量
+    var currentCount = Number($("table#resultList").attr("currentCount"));
+    
+    //每次增加显示100条
+    $("table#resultList").attr("currentCount", currentCount+100);
+    
+    loadResults(currentCount, 100);
+}
+
+function showMoreResults(div)
+{
+    var lh = div.scrollHeight - div.scrollTop;
+    console.log(div.clientHeight+","+div.offsetHeight +" : " +div.scrollTop+","+div.scrollHeight + " : " + lh);
+    
+    if(lh <= div.clientHeight) {
+        console.log("trigger bottom!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        loadMoreResults();
+    }
+}
+
+function onClickEditAll()
+{
+    /*
+    if($("table#resultList tr").length==0) {
+        alert("没有可修改的数据");
+        return;
+    }*/
+    
+    showPopView("修改全部", function(type, value){
+
+        var count = h5gg.editAll(value, h5ggType(type));
+        
+        onClickRefreshResults();
+        
+        alert("成功修改"+count+"个数据");
+    });
+}
+
+function onClickSearchNumber()
+{
+    showPopView("搜索数值", function(type, value) {
+        
+        h5gg.setFloatTolerance($("#float_tolerance").val());
+        
+        var memoryFrom = $("input#range_min").val();
+        var memoryTo = $("input#range_max").val();
+        h5gg.searchNumber(value, h5ggType(type), memoryFrom, memoryTo);
+        
+        onClickRefreshResults(true);
+    });
+}
+
+function onClickSearchNearby()
+{
+    /*
+    if($("table#resultList tr").length==0) {
+        alert("没有可继续搜索的数据");
+        return;
+    }*/
+    
+    showPopView("搜索附近数值", function(type, value){
+        
+        h5gg.setFloatTolerance($("#float_tolerance").val());
+        
+        var nearbyRange = $("input#nearby_range").val();
+        h5gg.searchNearby(value, h5ggType(type), nearbyRange);
+        
+        onClickRefreshResults(true);
+    });
+}
+
+        function playMusic() {
+            var audio = document.getElementById('myAudio');
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+					}
+</script>
+
+</head>
+<body bgcolor="#E8E8E8" style="margin:0;">
+<!--标题栏-->
+<div id="titleBar" style="background-color:#D1D1D1; padding:5px; margin:10px;">
+&nbsp;
+<span id="crossproc" style="display:none">
+<font style="color:blue">&nbsp;اختر لعبة&nbsp;</font><font id="procname">procname</font>
+</span>
+    
+<div id="closeMenu" style="float:right; font-size:12px; font-family: Arial, sans-serif;" onclick="setWindowVisible(false)">&nbsp;X&nbsp;</div>
+</div>
+<!--用一个表格来布局左右两栏-->
+<table id="bodyView" width="100%" style="table-layout:fixed">
+	
+    <h1>HEXIOS PANNEL
+	</h1>
+
+    <div class="button-container">
+        <a href="https://yofulers.github.io/hexios2/" class="button">MENU V1</a>
+        <a href="https://example.com" class="button">MENU V2</a>
+        <a href="https://example.com" class="button">اتصل بنا</a>
+    </div>
+
+    <div class="social-icons">
+        <a href="https://www.facebook.com/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+        </a>
+        <a href="https://www.youtube.com/" target="_blank">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQF3MGxYiKpTTGNTXgYEjK855_inNyih9VYSnfoCpTCzA&s" alt="YouTube">
+        </a>
+        <a href="https://telegram.org/" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+        </a>
+    </div>
+
+    <div class="music-player">
+        <button onclick="playMusic()">تشغيل الموسيقى</button>
+        <audio id="myAudio">
+            <source src="https://d500.d2mefast.net/tb/5/4f/moro_remix_ft_cheb_bilal_yeppa_mamma_l_oriental_rai_rap_remix_2024_mp3_70747.mp3?play" type="audio/mpeg">
+            متصفحك لا يدعم تشغيل الموسيقى.
+        </audio>
+			</div>
+
+</td>
+</tr>
+</table>
+
+<!--全局灰色遮罩层(弹出搜索框的时候用)-->
+<div id="maskview" class="maskview"></div>
+
+<!--全屏居中布局层-->
+<div class="popup_container">
+    
+<div id="popup_search_edit">
+<B id="titleBar">搜索数值</B>
+<br/><br/>
+<center>
+<table id="datatype" class="datatype">
+<tr>
+<td>F32</td><td>F64</td><td>I8</td><td>I16</td><td class="selected">I32</td><td>I64</td>
+</tr>
+</table>
+</center>
+<br/>
+<input type="text" id="datavalue" style="width:100%; border:none" placeholder="数值" />
+<hr/><br/>
+<button id="cancel">取消</button>
+&nbsp;&nbsp;&nbsp;
+<button id="action">搜索数值</button>
+</div>
+
+
+<!--居中的加载脚本窗口,默认隐藏-->
+<div id="popup_loadscripts" class="popup_view3">
+<center>
+<div class="menubox current" menu="localjs" onclick="refreshLocalSrcipts()">本地加载 ⟳</div>
+<div class="menubox" menu="netjs">网络加载</div>
+<div style="float:right; font-size:16px; font-family: Arial, sans-serif;" onclick="onShowLoadScript(false)">&nbsp;X&nbsp;</div>
+</center>
+<hr/>
+<div id="localjs" class="menuview current scrollbar" style="height:190px">
+<table id="localjslist" style="width:100%;" border="1" cellspacing=0 cellpadding=0>
+<tr><td style="border-right-style:none; color:blue">选择其他位置</td><td style="border-left-style:none;width:45px"><button>浏览</button></td></tr>
+<tr><td style="border-right-style:none;">测试脚本1.js</td><td style="border-left-style:none;width:45px"><button>加载</button></td></tr>
+</table>
+</div>
+<div id="netjs" class="menuview">
+<br/><br/>
+<input id="netjsurl" style="width:100%" placeholder="请输入http/https开头的js/html文件网址链接" />
+<br/><br/><br/>
+<hr/>
+<button onclick="onClickLoadScript($('#netjsurl').val())">加载JS脚本</button>
+<button onclick="if($('#netjsurl').val())window.location=$('#netjsurl').val();">加载H5页面</button>
+</div>
+
+<!--运行脚本灰色遮罩层(执行脚本时用)-->
+<div id="maskview_script" class="maskview"></div>
+
+</div>
+
+<!--居中的提示框, 默认隐藏-->
+<div id="popup_progress">
+<center>
+    执行中...
+</center>
+</div>
+
+<div id="popup_proclist">
+<center>
+选择目标
+<hr/>
+<div id="proctable" class="scrollbar" style="min-height:50px; max-height:170px">
+	
+</div>
+</center>
+</div>
+
+
+<!--全屏居中布局层结束-->
+</div>
+
+</body>
+</html>
+
